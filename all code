@@ -1,0 +1,138 @@
+tasks = [] #is a list
+
+def add_task(): #in ths part we do a funcion for the menu
+    try: # is a validation error
+        quantity_task = int(input("How many tasks do you want to add?: ")) #the question here is for the user
+        task_id = len(tasks) + 1
+
+        for idx in range(quantity_task):
+            name = input(f"Enter the name of task {idx+1}: ")
+            desciption = input(f"Enter the description of the task {idx+1} ")
+            priority = input(f"Enter the priority of task (high/medium/low) {idx+1}: ")
+            status = input(f"Enter the status of taks(waiting/made) {idx+1}: ")
+            
+
+            new_task = {
+                "id_task": task_id,
+                "name": name,
+                "description": desciption,   #is a dictionary
+                "priority": priority,
+                "status": status,
+            }
+
+            tasks.append(new_task)
+            print(f"task {name} has been added successfully")
+            task_id += 1
+
+    except:#validation error
+        print("Error: invalid input")
+
+
+def show_tasks(): #in ths part we do a funcion for the menu
+    if not tasks:#here is a while it is found"
+        print("There are no tasks")
+    else:
+        for task in tasks:
+            print(f"ID: {task['id_task']} | Name: {task['name']} | description: {task['description']} | priority: {task['priority']} | status: {task['status']}")
+
+
+def search_task(): #in ths part we do a funcion for the menu
+    search_id = int(input("Enter the task ID you want to search: "))
+    found = False
+
+    for task in tasks:#This loop iterates through the list to find what the user is requesting.
+        if search_id == task['id_task']:
+            print(f"ID: {task['id_task']} | Name: {task['name']} | description: {task['description']} | priority: {task['priority']} | status: {task['status']}")
+            found = True
+            break
+
+    if not found:
+        print("task not found")
+
+
+def delete_task(): #in ths part we do a funcion for the menu
+    delete_id = int(input("Enter the task ID to delete: "))
+    found = False
+
+    for task in tasks: #This loop iterates through the list to find what the user is requesting.
+        if task['id_task'] == delete_id:
+            tasks.remove(task)
+            print("task has been deleted")
+            found = True
+            break
+
+    if not found:
+        print("task not found")
+
+def update_task(): #in ths part we do a funcion for the menu
+    try:
+        update_id = int(input("Enter the task ID to update: ")) #the question here is for the user
+        field = input("What do you want to update? (name/description/priority/status): ").lower()
+
+        found = False
+        
+        for task in tasks: #This loop iterates through the list to find what the user is requesting.
+            if update_id == task['id_task']:
+                found = True
+
+                if field == "name":
+                    new_name = input("Enter new name: ")
+                    task['name'] = new_name
+                    print("Name updated successfully")
+                
+                elif field == "description":
+                    new_description = input("Enter new description: ")
+                    task['description'] = new_description
+                    print("description updated successfully")
+
+                elif field == "priority":
+                    new_priority = input("Enter new priority (high/mediun/low): ")    #conditionals
+                    task['priority'] = new_priority
+                    print("priority updated successfully")
+                
+                elif field == "status":
+                    new_status = input("Ente new status (waiting/made): ")
+                    task['status'] = new_status
+                    print("status update successfully")
+                
+                else:
+                    print("Invalid option")
+
+                break
+
+        if not found:
+            print("task not found")
+
+    except:
+        print("Error: invalid input")
+
+while True: # this while true is for the menu and the rest of the code below
+    option = input("""
+================================
+What do you want to do?
+    
+1.Add new tasks
+2.Show tasks
+3.Search task
+4.Delete task
+5.update_task
+6.Exit program
+================================
+
+Choose an option: """)
+
+    if option == "1":
+        add_task()
+    elif option == "2":
+        show_tasks()
+    elif option == "3":
+        search_task()
+    elif option == "4":
+        delete_task()
+    elif option == "5":
+        update_task()
+    elif option == "6":
+        print("Exiting the program. Thanks for using it <3")
+        break
+    else:
+        print("Invalid option, please try again")
